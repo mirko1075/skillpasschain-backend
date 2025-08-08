@@ -11,7 +11,9 @@ class CertificationRepository {
     return CertificationModel.create(data);
   }
   update(id: string, data: Partial<ICertification>) {
-    return CertificationModel.findByIdAndUpdate(id, data, { new: true }).populate('issuedBy recipient');
+    return CertificationModel.findByIdAndUpdate(id, data, { new: true }).populate(
+      'issuedBy recipient',
+    );
   }
   delete(id: string) {
     return CertificationModel.findByIdAndDelete(id);

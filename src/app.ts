@@ -21,13 +21,14 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(hpp());
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-}));
-
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+  }),
+);
 
 // Body Parsers
 app.use(express.json());

@@ -15,11 +15,11 @@ const assessmentSchema = new Schema<IAssessment>(
     questions: [
       {
         question: { type: String, required: true },
-        answer: { type: String, required: true }
-      }
-    ]
+        answer: { type: String, required: true },
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IAssessment>('Assessment', assessmentSchema);

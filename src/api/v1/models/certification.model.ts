@@ -16,9 +16,9 @@ const certificationSchema = new Schema<ICertification>(
     issuedBy: { type: Schema.Types.ObjectId, ref: 'Institution', required: true },
     recipient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     issueDate: { type: Date, default: Date.now },
-    expiryDate: { type: Date }
+    expiryDate: { type: Date },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<ICertification>('Certification', certificationSchema);

@@ -16,7 +16,7 @@ const userSchema = new Schema<IUser>(
     role: { type: String, enum: ['student', 'institution_admin', 'admin'], default: 'student' },
     refreshToken: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IUser>('User', userSchema);

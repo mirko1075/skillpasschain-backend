@@ -45,12 +45,14 @@ SkillPassChain Backend is the server-side application that powers SkillPassChain
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/mirko1075/skillpasschain-backend.git
    cd skillpasschain-backend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -66,11 +68,13 @@ SkillPassChain Backend is the server-side application that powers SkillPassChain
    ```
 
 4. **Run database migrations** (if applicable)
+
    ```bash
    npm run migrate
    ```
 
 5. **Start the server**
+
    ```bash
    npm start
    # or for development
@@ -128,4 +132,4 @@ This project is licensed under the MIT License.
 
 ---
 
-*SkillPassChain Backend — Secure, verifiable skills for the future of work.*
+_SkillPassChain Backend — Secure, verifiable skills for the future of work._
