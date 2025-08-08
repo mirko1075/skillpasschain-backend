@@ -3,13 +3,13 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
-import mongoSanitize from 'express-mongo-sanitize';
-import xss from 'xss-clean';
 import hpp from 'hpp';
 
 import userRoutes from '@v1/routes/user.routes';
 import { notFound } from '@middlewares/notFound';
 import { errorHandler } from '@middlewares/errorHandler';
+import assessmentRoutes from '@v1/routes/assessment.routes';
+import certificationRoutes from '@v1/routes/certification.routes';
 
 dotenv.config();
 
@@ -18,8 +18,6 @@ const app = express();
 // Security Middlewares
 app.use(helmet());
 app.use(cors());
-app.use(mongoSanitize());
-app.use(xss());
 app.use(hpp());
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -27,6 +25,7 @@ app.use(rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 }));
+
 
 // Body Parsers
 app.use(express.json());
@@ -39,7 +38,8 @@ app.get('/api/health', (_req, res) => {
 
 // API Versioned Routes
 app.use('/api/v1/users', userRoutes);
-
+app.use('/api/v1/assessments', assessmentRoutes);
+app.use('/api/v1/certifications', certificationRoutes);
 // Not Found and Error Handlers
 app.use(notFound);
 app.use(errorHandler);

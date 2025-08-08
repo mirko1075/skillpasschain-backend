@@ -1,19 +1,22 @@
-import { User } from '@v1/interfaces/user.interface';
-import { v4 as uuidv4 } from 'uuid';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const users: User[] = [
-  {
-    id: uuidv4(),
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    name: 'Bob Smith',
-    email: 'bob@example.com',
-    createdAt: new Date(),
-  },
-];
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password?: string;
+  role: 'student' | 'admin' | 'institution';
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-export default users;
+const userSchema = new Schema<IUser>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, select: false }, // don't return by default
+    role: { type: String, enum: ['student', 'admin', 'institution'], default: 'student' },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model<IUser>('User', userSchema);
