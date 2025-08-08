@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { getAllUsers, getUserById, createUser } from '@v1/controllers/user.controller';
-import { validateRequest } from '@v1/middlewares/validateRequest';
-import { createUserValidation } from '@v1/validations/user.validation';
+import UserController from '@v1/controllers/user.controller';
 
 const router = Router();
 
-router.get('/', getAllUsers);
-router.get('/:id', getUserById);
-router.post('/', createUserValidation, validateRequest, createUser);
+router.get('/', UserController.getAll.bind(UserController));
+router.get('/:id', UserController.getById.bind(UserController));
+router.post('/', UserController.create.bind(UserController));
+router.put('/:id', UserController.update.bind(UserController));
+router.delete('/:id', UserController.delete.bind(UserController));
 
 export default router;

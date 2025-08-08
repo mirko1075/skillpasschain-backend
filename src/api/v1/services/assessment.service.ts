@@ -5,7 +5,7 @@ export default {
   createAssessment: (userId: string, skill: string) => assessmentRepo.create(userId, skill),
   completeAssessment: (id: string, score: number) => {
     const status = score >= 70 ? 'completed' : 'failed';
-    const assessment = assessmentRepo.updateStatus(id, status, score);
+    const assessment = assessmentRepo.update(id, status, score);
 
     if (status === 'completed' && assessment) {
       certificationRepo.create(assessment.userId, assessment.skill);

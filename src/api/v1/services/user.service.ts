@@ -1,25 +1,21 @@
-import users from '@v1/models/user.model';
-import { User } from '@v1/interfaces/user.interface';
+import UserRepository from '@v1/repositories/user.repository';
+import { IUser } from '@v1/models/user.model';
 
 class UserService {
-  getAllUsers(): User[] {
-    return users;
+  getAll() {
+    return UserRepository.findAll();
   }
-
-  getUserById(id: string): User | undefined {
-    return users.find((user: User) => user.id === id);
+  getById(id: string) {
+    return UserRepository.findById(id);
   }
-
-  createUser(name: string, email: string): User {
-    const newUser: User = {
-      id: crypto.randomUUID(),
-      name,
-      email,
-      createdAt: new Date(),
-    };
-
-    users.push(newUser);
-    return newUser;
+  create(data: IUser) {
+    return UserRepository.create(data);
+  }
+  update(id: string, data: Partial<IUser>) {
+    return UserRepository.update(id, data);
+  }
+  delete(id: string) {
+    return UserRepository.delete(id);
   }
 }
 

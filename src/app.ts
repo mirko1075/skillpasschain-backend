@@ -10,6 +10,7 @@ import { notFound } from '@middlewares/notFound';
 import { errorHandler } from '@middlewares/errorHandler';
 import assessmentRoutes from '@v1/routes/assessment.routes';
 import certificationRoutes from '@v1/routes/certification.routes';
+import institutionRoutes from '@v1/routes/institution.routes';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/assessments', assessmentRoutes);
 app.use('/api/v1/certifications', certificationRoutes);
+app.use('/api/v1/institutions', institutionRoutes);
 // Not Found and Error Handlers
 app.use(notFound);
 app.use(errorHandler);

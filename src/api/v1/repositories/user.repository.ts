@@ -1,14 +1,21 @@
-import { User } from '@v1/interfaces/user.interface';
+import UserModel, { IUser } from '@v1/models/user.model';
 
-let mockUsers: User[] = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', role: 'student', createdAt: new Date() },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'certifier', createdAt: new Date() }
-];
+class UserRepository {
+  findAll() {
+    return UserModel.find();
+  }
+  findById(id: string) {
+    return UserModel.findById(id);
+  }
+  create(data: IUser) {
+    return UserModel.create(data);
+  }
+  update(id: string, data: Partial<IUser>) {
+    return UserModel.findByIdAndUpdate(id, data, { new: true });
+  }
+  delete(id: string) {
+    return UserModel.findByIdAndDelete(id);
+  }
+}
 
-export const findAll = () => {
-  return mockUsers;
-};
-
-export const findById = (id: string) => {
-  return mockUsers.find(user => user.id === id) || null;
-};
+export default new UserRepository();
