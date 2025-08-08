@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      // Versioned API aliases
+      "@v1/controllers/*": ["api/v1/controllers/*"],
+      "@v1/routes/*": ["api/v1/routes/*"],
+      "@v1/services/*": ["api/v1/services/*"],
+      "@v1/models/*": ["api/v1/models/*"],
+      "@v1/interfaces/*": ["api/v1/interfaces/*"],
+      "@v1/validators/*": ["api/v1/validators/*"],
+      "@v1/constants/*": ["api/v1/constants/*"],
+
+      // Global/shared modules
+      "@middlewares/*": ["middlewares/*"],
+      "@utils/*": ["utils/*"],
+      "@config/*": ["config/*"],
+      "@types/*": ["types/*"],
+      "@helpers/*": ["helpers/*"],
+      "@data/*": ["data/*"],
+      "@errors/*": ["errors/*"],
+      "@exceptions/*": ["exceptions/*"],
+      "@repositories/*": ["repositories/*"],
+      "@lib/*": ["lib/*"],
+      "@assets/*": ["assets/*"],
+      "@node_modules/*": ["./node_modules/*"]
+    }
+  }
+}
