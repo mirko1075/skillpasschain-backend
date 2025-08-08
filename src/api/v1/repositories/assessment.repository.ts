@@ -1,48 +1,21 @@
 import AssessmentModel, { IAssessment } from '@v1/models/assessment.model';
-import { Types } from 'mongoose';
 
-export default class AssessmentRepository {
-  static create(userId: string, skill: string) {
-    const assessment = new AssessmentModel({ userId, skill });
-    return assessment.save();
+class AssessmentRepository {
+  findAll() {
+    return AssessmentModel.find().populate('createdBy');
   }
-  static update(id: string, status: string, score: number) {
-    return AssessmentModel.findByIdAndUpdate(
-      id,
-      { status, score, dateCompleted: new Date() },
-      { new: true }
-    ).exec();
+  findById(id: string) {
+    return AssessmentModel.findById(id).populate('createdBy');
   }
-  static getByUserId(userId: string) {
-    return AssessmentModel.find({ userId }).exec();
+  create(data: IAssessment) {
+    return AssessmentModel.create(data);
   }
-  async findAll(): Promise<IAssessment[]> {
-    return AssessmentModel.find()
-      .populate('createdBy', 'name email')
-      .populate('assignedTo', 'name email')
-      .exec();
+  update(id: string, data: Partial<IAssessment>) {
+    return AssessmentModel.findByIdAndUpdate(id, data, { new: true }).populate('createdBy');
   }
-
-  async findById(id: string): Promise<IAssessment | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return AssessmentModel.findById(id)
-      .populate('createdBy', 'name email')
-      .populate('assignedTo', 'name email')
-      .exec();
-  }
-
-  async create(data: Partial<IAssessment>): Promise<IAssessment> {
-    const assessment = new AssessmentModel(data);
-    return assessment.save();
-  }
-
-  async update(id: string, data: Partial<IAssessment>): Promise<IAssessment | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return AssessmentModel.findByIdAndUpdate(id, data, { new: true }).exec();
-  }
-
-  async delete(id: string): Promise<IAssessment | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return AssessmentModel.findByIdAndDelete(id).exec();
+  delete(id: string) {
+    return AssessmentModel.findByIdAndDelete(id);
   }
 }
+
+export default new AssessmentRepository();

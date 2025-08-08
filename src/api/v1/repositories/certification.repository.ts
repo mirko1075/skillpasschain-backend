@@ -1,38 +1,21 @@
 import CertificationModel, { ICertification } from '@v1/models/certification.model';
-import { Types } from 'mongoose';
 
-export default class CertificationRepository {
-  static create(userId: any, skill: any) {
-    const certification = new CertificationModel({ issuedTo: userId, skill });
-    return certification.save();
+class CertificationRepository {
+  findAll() {
+    return CertificationModel.find().populate('issuedBy recipient');
   }
-  async findAll(): Promise<ICertification[]> {
-    return CertificationModel.find()
-      .populate('issuedTo', 'name email')
-      .populate('issuedBy', 'name email')
-      .exec();
+  findById(id: string) {
+    return CertificationModel.findById(id).populate('issuedBy recipient');
   }
-
-  async findById(id: string): Promise<ICertification | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return CertificationModel.findById(id)
-      .populate('issuedTo', 'name email')
-      .populate('issuedBy', 'name email')
-      .exec();
+  create(data: ICertification) {
+    return CertificationModel.create(data);
   }
-
-  async create(data: Partial<ICertification>): Promise<ICertification> {
-    const cert = new CertificationModel(data);
-    return cert.save();
+  update(id: string, data: Partial<ICertification>) {
+    return CertificationModel.findByIdAndUpdate(id, data, { new: true }).populate('issuedBy recipient');
   }
-
-  async update(id: string, data: Partial<ICertification>): Promise<ICertification | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return CertificationModel.findByIdAndUpdate(id, data, { new: true }).exec();
-  }
-
-  async delete(id: string): Promise<ICertification | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return CertificationModel.findByIdAndDelete(id).exec();
+  delete(id: string) {
+    return CertificationModel.findByIdAndDelete(id);
   }
 }
+
+export default new CertificationRepository();

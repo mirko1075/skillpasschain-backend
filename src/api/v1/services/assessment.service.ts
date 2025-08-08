@@ -1,16 +1,22 @@
-import assessmentRepo from '@v1/repositories/assessment.repository';
-import certificationRepo from '@v1/repositories/certification.repository';
+import AssessmentRepository from '@v1/repositories/assessment.repository';
+import { IAssessment } from '@v1/models/assessment.model';
 
-export default {
-  createAssessment: (userId: string, skill: string) => assessmentRepo.create(userId, skill),
-  completeAssessment: (id: string, score: number) => {
-    const status = score >= 70 ? 'completed' : 'failed';
-    const assessment = assessmentRepo.update(id, status, score);
+class AssessmentService {
+  getAll() {
+    return AssessmentRepository.findAll();
+  }
+  getById(id: string) {
+    return AssessmentRepository.findById(id);
+  }
+  create(data: IAssessment) {
+    return AssessmentRepository.create(data);
+  }
+  update(id: string, data: Partial<IAssessment>) {
+    return AssessmentRepository.update(id, data);
+  }
+  delete(id: string) {
+    return AssessmentRepository.delete(id);
+  }
+}
 
-    if (status === 'completed' && assessment) {
-      certificationRepo.create(assessment.userId, assessment.skill);
-    }
-    return assessment;
-  },
-  getUserAssessments: (userId: string) => assessmentRepo.getByUserId(userId),
-};
+export default new AssessmentService();

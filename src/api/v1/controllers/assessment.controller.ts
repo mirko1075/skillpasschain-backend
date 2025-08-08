@@ -1,22 +1,54 @@
-import { Request, Response } from 'express';
-import assessmentService from '@v1/services/assessment.service';
+import { Request, Response, NextFunction } from 'express';
+import AssessmentService from '@v1/services/assessment.service';
 
-export const createAssessment = (req: Request, res: Response) => {
-  const { userId, skill } = req.body;
-  if (!userId || !skill) return res.status(400).json({ success: false, message: 'Missing fields' });
-  const assessment = assessmentService.createAssessment(userId, skill);
-  res.status(201).json(assessment);
-};
+class AssessmentController {
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const assessments = await AssessmentService.getAll();
+      res.json(assessments);
+    } catch (error) {
+      next(error);
+    }
+  }
 
-export const completeAssessment = (req: Request, res: Response) => {
-  const { score } = req.body;
-  if (score === undefined) return res.status(400).json({ success: false, message: 'Score required' });
-  const updated = assessmentService.completeAssessment(req.params.id, score);
-  if (!updated) return res.status(404).json({ success: false, message: 'Assessment not found' });
-  res.json(updated);
-};
+  async getById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const assessment = await AssessmentService.getById(req.params.id);
+      if (!assessment) return res.status(404).json({ message: 'Assessment not found' });
+      res.json(assessment);
+    } catch (error) {
+      next(error);
+    }
+  }
 
-export const getUserAssessments = (req: Request, res: Response) => {
-  const assessments = assessmentService.getUserAssessments(req.params.userId);
-  res.json(assessments);
-};
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const assessment = await AssessmentService.create(req.body);
+      res.status(201).json(assessment);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const updated = await AssessmentService.update(req.params.id, req.body);
+      if (!updated) return res.status(404).json({ message: 'Assessment not found' });
+      res.json(updated);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const deleted = await AssessmentService.delete(req.params.id);
+      if (!deleted) return res.status(404).json({ message: 'Assessment not found' });
+      res.json({ message: 'Assessment deleted' });
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+export default new AssessmentController();

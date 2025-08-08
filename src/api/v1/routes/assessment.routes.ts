@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { createAssessment, completeAssessment, getUserAssessments } from '@v1/controllers/assessment.controller';
+import AssessmentController from '@v1/controllers/assessment.controller';
 
 const router = Router();
 
-router.post('/', createAssessment);
-router.put('/:id/complete', completeAssessment);
-router.get('/user/:userId', getUserAssessments);
+router.get('/', AssessmentController.getAll.bind(AssessmentController));
+router.get('/:id', AssessmentController.getById.bind(AssessmentController));
+router.post('/', AssessmentController.create.bind(AssessmentController));
+router.put('/:id', AssessmentController.update.bind(AssessmentController));
+router.delete('/:id', AssessmentController.delete.bind(AssessmentController));
 
 export default router;

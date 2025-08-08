@@ -2,15 +2,15 @@ import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IAssessment extends Document {
   title: string;
-  description: string;
+  description?: string;
   createdBy: Types.ObjectId; // Institution or instructor
   questions: { question: string; answer: string }[];
 }
 
 const assessmentSchema = new Schema<IAssessment>(
   {
-    title: { type: String, required: true },
-    description: { type: String },
+    title: { type: String, required: true, trim: true },
+    description: { type: String, trim: true },
     createdBy: { type: Schema.Types.ObjectId, ref: 'Institution', required: true },
     questions: [
       {

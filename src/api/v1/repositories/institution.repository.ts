@@ -1,28 +1,21 @@
 import InstitutionModel, { IInstitution } from '@v1/models/institution.model';
-import { Types } from 'mongoose';
 
-export default class InstitutionRepository {
-  async findAll(): Promise<IInstitution[]> {
-    return InstitutionModel.find().exec();
+class InstitutionRepository {
+  findAll() {
+    return InstitutionModel.find();
   }
-
-  async findById(id: string): Promise<IInstitution | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return InstitutionModel.findById(id).exec();
+  findById(id: string) {
+    return InstitutionModel.findById(id);
   }
-
-  async create(data: Partial<IInstitution>): Promise<IInstitution> {
-    const institution = new InstitutionModel(data);
-    return institution.save();
+  create(data: IInstitution) {
+    return InstitutionModel.create(data);
   }
-
-  async update(id: string, data: Partial<IInstitution>): Promise<IInstitution | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return InstitutionModel.findByIdAndUpdate(id, data, { new: true }).exec();
+  update(id: string, data: Partial<IInstitution>) {
+    return InstitutionModel.findByIdAndUpdate(id, data, { new: true });
   }
-
-  async delete(id: string): Promise<IInstitution | null> {
-    if (!Types.ObjectId.isValid(id)) return null;
-    return InstitutionModel.findByIdAndDelete(id).exec();
+  delete(id: string) {
+    return InstitutionModel.findByIdAndDelete(id);
   }
 }
+
+export default new InstitutionRepository();
