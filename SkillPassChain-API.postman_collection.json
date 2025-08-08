@@ -1,35 +1,40 @@
 {
   "info": {
-    "name": "SkillPassChain MVP",
-    "_postman_id": "12345678-aaaa-bbbb-cccc-1234567890ab",
-    "description": "Postman collection for SkillPassChain MVP API with Users, Assessments, and Certifications.",
+    "name": "SkillPassChain API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Health Check",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/api/health",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "api",
-            "health"
-          ]
-        }
-      }
-    },
-    {
       "name": "Users",
       "item": [
         {
-          "name": "Create User",
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/users",
+              "host": [
+                "http://localhost:5000/api/v1/users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/users/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/users/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create",
           "request": {
             "method": "POST",
             "header": [
@@ -40,100 +45,18 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\"}"
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"role\": \"developer\"\n}"
             },
             "url": {
-              "raw": "http://localhost:3000/api/v1/users",
-              "protocol": "http",
+              "raw": "http://localhost:5000/api/v1/users",
               "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users"
+                "http://localhost:5000/api/v1/users"
               ]
             }
           }
         },
         {
-          "name": "Get All Users",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/v1/users",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get User By ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/v1/users/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Assessments",
-      "item": [
-        {
-          "name": "Create Assessment",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"userId\": \":userId\", \"skill\": \"JavaScript\"}"
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/v1/assessments",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "assessments"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Complete Assessment",
+          "name": "Update",
           "request": {
             "method": "PUT",
             "header": [
@@ -144,43 +67,25 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"score\": 85}"
+              "raw": "{\n  \"name\": \"John Updated\",\n  \"role\": \"admin\"\n}"
             },
             "url": {
-              "raw": "http://localhost:3000/api/v1/assessments/:id/complete",
-              "protocol": "http",
+              "raw": "http://localhost:5000/api/v1/users/{id}",
               "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "assessments",
-                ":id",
-                "complete"
+                "http://localhost:5000/api/v1/users/{id}"
               ]
             }
           }
         },
         {
-          "name": "Get User Assessments",
+          "name": "Delete",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/v1/assessments/user/:userId",
-              "protocol": "http",
+              "raw": "http://localhost:5000/api/v1/users/{id}",
               "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "assessments",
-                "user",
-                ":userId"
+                "http://localhost:5000/api/v1/users/{id}"
               ]
             }
           }
@@ -191,23 +96,260 @@
       "name": "Certifications",
       "item": [
         {
-          "name": "Get User Certifications",
+          "name": "Get All",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/v1/certifications/user/:userId",
-              "protocol": "http",
+              "raw": "http://localhost:5000/api/v1/certifications",
               "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "certifications",
-                "user",
-                ":userId"
+                "http://localhost:5000/api/v1/certifications"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/certifications/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/certifications/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"React Mastery\",\n  \"description\": \"Certification for mastering React.js\",\n  \"issuedBy\": \"64a66f5f8f1b2c001f0e0001\",\n  \"recipient\": \"64a66f5f8f1b2c001f0e0002\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/certifications",
+              "host": [
+                "http://localhost:5000/api/v1/certifications"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"React Mastery Updated\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/certifications/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/certifications/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/certifications/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/certifications/{id}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assessments",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/assessments",
+              "host": [
+                "http://localhost:5000/api/v1/assessments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/assessments/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/assessments/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"JavaScript Basics\",\n  \"description\": \"Assessment covering JS fundamentals\",\n  \"createdBy\": \"64a66f5f8f1b2c001f0e0003\",\n  \"questions\": [\n    {\n      \"question\": \"What is closure?\",\n      \"answer\": \"A function with preserved scope\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/assessments",
+              "host": [
+                "http://localhost:5000/api/v1/assessments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/assessments/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/assessments/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/assessments/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/assessments/{id}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Institutions",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/institutions",
+              "host": [
+                "http://localhost:5000/api/v1/institutions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/institutions/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/institutions/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Academy\",\n  \"email\": \"info@techacademy.com\",\n  \"address\": \"123 Tech Street\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/institutions",
+              "host": [
+                "http://localhost:5000/api/v1/institutions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"456 Updated Street\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/institutions/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/institutions/{id}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/institutions/{id}",
+              "host": [
+                "http://localhost:5000/api/v1/institutions/{id}"
               ]
             }
           }
