@@ -1,368 +1,286 @@
 {
-	"info": {
-		"_postman_id": "d28a5daa-c19c-40d9-8ee4-7a3f0f8cb1b1",
-		"name": "SkillPassChain API MVP",
-		"description": "Postman collection for SkillPassChain MVP API with Users, Assessments, and Certifications.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13535597"
-	},
-	"item": [
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Create User",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\"}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Users",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User By ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/users/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Assessments",
-			"item": [
-				{
-					"name": "Create Assessment",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"userId\": \":userId\", \"skill\": \"JavaScript\"}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/assessments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"assessments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Complete Assessment",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"score\": 85}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/assessments/:id/complete",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"assessments",
-								":id",
-								"complete"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Assessments",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/assessments/user/:userId",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"assessments",
-								"user",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Certifications",
-			"item": [
-				{
-					"name": "Get User Certifications",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/certifications/user/:userId",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"certifications",
-								"user",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth",
-			"item": [
-				{
-					"name": "Register User",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/auth/register",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login User",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/auth/login",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Refresh Token",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/auth/refresh",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"refresh"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout User",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/auth/logout",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"logout"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Health Check",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/health",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"health"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "d28a5daa-c19c-40d9-8ee4-7a3f0f8cb1b1",
+    "name": "SkillPassChain API MVP",
+    "description": "Postman collection for SkillPassChain MVP API with Users, Assessments, and Certifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "13535597"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\"}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assessments",
+      "item": [
+        {
+          "name": "Create Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\": \":userId\", \"skill\": \"JavaScript\"}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/assessments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "assessments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Assessment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"score\": 85}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/assessments/:id/complete",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "assessments", ":id", "complete"],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Assessments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/assessments/user/:userId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "assessments", "user", ":userId"],
+              "variable": [
+                {
+                  "key": "userId"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Certifications",
+      "item": [
+        {
+          "name": "Get User Certifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/certifications/user/:userId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "certifications", "user", ":userId"],
+              "variable": [
+                {
+                  "key": "userId"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "refresh"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "health"]
+        }
+      },
+      "response": []
+    }
+  ]
 }

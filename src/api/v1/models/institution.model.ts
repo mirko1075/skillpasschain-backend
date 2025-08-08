@@ -10,9 +10,9 @@ const institutionSchema = new Schema<IInstitution>(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true },
-    address: { type: String, trim: true }
+    address: { type: String, trim: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IInstitution>('Institution', institutionSchema);
