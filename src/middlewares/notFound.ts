@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '@utils/AppError';
+import { ApiError } from 'errors/ApiError';
 
 export const notFound = (_req: Request, _res: Response, next: NextFunction) => {
-  next(new AppError('Route not found', 404));
+  next(new ApiError(404, 'Route not found'));
 };
