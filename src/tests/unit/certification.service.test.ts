@@ -1,5 +1,5 @@
 import CertificationService from '@v1/services/certification.service';
-import { ICertification } from '../../src/api/v1/models/certification.model';
+import { ICertification } from '../../api/v1/models/certification.model';
 import { Types } from 'mongoose';
 
 jest.mock('@v1/repositories/certification.repository', () => ({

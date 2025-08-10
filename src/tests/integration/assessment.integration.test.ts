@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 

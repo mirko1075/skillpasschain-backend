@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 jest.setTimeout(30000); // Set a longer timeout for the tests
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(() => 'mockedToken'),

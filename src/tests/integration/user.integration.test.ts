@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 jest.mock('jsonwebtoken', () => ({

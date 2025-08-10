@@ -1,9 +1,9 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 
-describe('Institution API', () => {
+describe('Certification API', () => {
   let createdId: string;
   let mongoServer: MongoMemoryServer;
 
@@ -25,38 +25,38 @@ describe('Institution API', () => {
       await collections[key].deleteMany({});
     }
   });
-  it('should create a new institution', async () => {
+  it('should create a certification', async () => {
     const res = await request(app)
-      .post('/api/v1/institutions')
-      .send({ name: 'Harvard University', country: 'USA', website: 'https://harvard.edu', email: 'harvard@example.com' });
+      .post('/api/v1/certifications')
+      .send({ title: 'Blockchain Developer', issuedBy: 'MIT', issueDate: '2025-01-01' });
 
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('_id');
     createdId = res.body._id;
   });
 
-  it('should fetch all institutions', async () => {
-    const res = await request(app).get('/api/v1/institutions');
+  it('should fetch all certifications', async () => {
+    const res = await request(app).get('/api/v1/certifications');
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it('should get institution by ID', async () => {
-    const res = await request(app).get(`/api/v1/institutions/${createdId}`);
+  it('should get certification by ID', async () => {
+    const res = await request(app).get(`/api/v1/certifications/${createdId}`);
     expect(res.statusCode).toBe(200);
     expect(res.body._id).toBe(createdId);
   });
 
-  it('should update institution', async () => {
+  it('should update certification', async () => {
     const res = await request(app)
-      .put(`/api/v1/institutions/${createdId}`)
-      .send({ name: 'MIT' });
+      .put(`/api/v1/certifications/${createdId}`)
+      .send({ title: 'Advanced Blockchain Developer' });
     expect(res.statusCode).toBe(200);
-    expect(res.body.name).toBe('MIT');
+    expect(res.body.title).toBe('Advanced Blockchain Developer');
   });
 
-  it('should delete institution', async () => {
-    const res = await request(app).delete(`/api/v1/institutions/${createdId}`);
+  it('should delete certification', async () => {
+    const res = await request(app).delete(`/api/v1/certifications/${createdId}`);
     expect(res.statusCode).toBe(204);
   });
 });

@@ -1,5 +1,5 @@
-import UserService from '../../src/api/v1/services/user.service';
-import { IUser } from '../../src/api/v1/models/user.model';
+import UserService from '../../api/v1/services/user.service';
+import { IUser } from '../../api/v1/models/user.model';
 jest.mock('@v1/repositories/user.repository', () => ({
   create: jest.fn().mockResolvedValue({ _id: '1', firstName: 'John', lastName: 'Doe', email: 'test@test.com' }),
   findAll: jest.fn().mockResolvedValue([{ _id: '1', firstName: 'John', lastName: 'Doe' }]),
