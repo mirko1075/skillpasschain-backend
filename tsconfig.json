@@ -12,19 +12,15 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      // Versioned API aliases
       "@v1/*": ["api/v1/*"],
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
       "@middlewares/*": ["middlewares/*"],
       "@utils/*": ["utils/*"],
-      "@config/*": ["config/*"],
-      "@routes/*": ["routes/*"],
-      "@types/*": ["types/*"],
-      "@repositories/*": ["repositories/*"],
-      "@validators/*": ["validators/*"],
-      "@constants/*": ["constants/*"]
+      "@config/*": ["config/*"]
     }
-  }
+  },
+  "include": ["src", "tests"],
+  "exclude": ["node_modules", "dist"]
 }

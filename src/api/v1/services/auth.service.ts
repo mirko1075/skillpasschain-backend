@@ -1,17 +1,18 @@
-import User, { IUser } from '@v1/models/user.model';
+import User from '@v1/models/user.model';
 import { hashPassword, comparePassword } from '@utils/password.util';
 import { generateAccessToken, generateRefreshToken } from '@utils/jwt.util';
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from '../../../errors/ApiError'
 
-export const register = async (name: string, email: string, password: string) => {
+
+export const register = async (firstName: string, lastName: string, email: string, password: string) => {
   const existing = await User.findOne({ email });
   if (existing) throw new ApiError(400, 'Email already in use');
 
   const hashed = await hashPassword(password);
-  const user = new User({ name, email, password: hashed });
+  const user = new User({ firstName, lastName, email, password: hashed });
   await user.save();
 
-  return { id: user._id, name: user.name, email: user.email, role: user.role };
+  return { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role };
 };
 
 export const login = async (email: string, password: string) => {
