@@ -38,48 +38,26 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   try {
     const { firstName, lastName, email, password, role } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
-      return next(new ApiError(400, 'All fields are required'));
+    // Enforce normal users registering via public route as "user"
+    let assignedRole = 'user';
+
+    // If role is "admin" — allow only if requester is already authenticated admin
+    if (role === 'admin') {
+      const currentUser = (req as any).user;
+      if (!currentUser || currentUser.role !== 'admin') {
+        return next(new ApiError(403, 'Forbidden: Only admins can create other admins.'));
+      }
+      assignedRole = 'admin';
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return next(new ApiError(400, 'Email already registered'));
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+    const user = await AuthService.register(
       firstName,
       lastName,
       email,
-      password: hashedPassword,
-      role: role || 'user', // default to user
-    });
-
-    const accessToken = jwt.sign(
-      { id: newUser._id, role: newUser.role },
-      process.env.JWT_SECRET as string,
-      { expiresIn: '15m' }
+      password
     );
 
-    const refreshToken = jwt.sign(
-      { id: newUser._id },
-      process.env.JWT_REFRESH_SECRET as string,
-      { expiresIn: '7d' }
-    );
-
-    res.status(201).json({
-      success: true,
-      user: {
-        id: newUser._id,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-        role: newUser.role,
-      },
-      accessToken,
-      refreshToken,
-    });
+    res.status(201).json({ success: true, user });
   } catch (err) {
     next(err);
   }

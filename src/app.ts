@@ -12,6 +12,7 @@ import assessmentRoutes from '@v1/routes/assessment.routes';
 import certificationRoutes from '@v1/routes/certification.routes';
 import institutionRoutes from '@v1/routes/institution.routes';
 import authRoutes from '@v1/routes/auth.routes';
+import adminRoutes from '@v1/routes/admin.routes';
 
 dotenv.config();
 
@@ -42,6 +43,8 @@ app.get('/api/health', (_req, res) => {
 // API Versioned Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/admin', adminRoutes);
+
 app.use('/api/v1/assessments', assessmentRoutes);
 app.use('/api/v1/certifications', certificationRoutes);
 app.use('/api/v1/institutions', institutionRoutes);
