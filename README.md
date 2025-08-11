@@ -14,6 +14,76 @@ This is the backend API for SkillPassChain, a platform for managing users, insti
    npm run dev
    ```
 
+## API Documentation
+
+### Authentication
+
+- **POST** `/api/v1/auth/register` — Register a new user
+  - Body: `{ "name": "John Doe", "email": "john@example.com", "password": "Password123!" }`
+- **POST** `/api/v1/auth/login` — Login
+  - Body: `{ "email": "john@example.com", "password": "Password123!" }`
+- **POST** `/api/v1/auth/refresh` — Refresh access token
+  - Body: `{ "refreshToken": "<refresh_token>" }`
+- **POST** `/api/v1/auth/logout` — Logout (requires Authorization header)
+
+### Users
+
+- **POST** `/api/v1/users` — Create user
+- **GET** `/api/v1/users` — Get all users
+- **GET** `/api/v1/users/:id` — Get user by ID
+
+### Assessments
+
+- **POST** `/api/v1/assessments` — Create assessment
+  - Body: `{ "userId": ":userId", "skill": "JavaScript" }`
+- **PUT** `/api/v1/assessments/:id/complete` — Complete assessment
+  - Body: `{ "score": 85 }`
+- **GET** `/api/v1/assessments/user/:userId` — Get user assessments
+
+### Certifications
+
+- **GET** `/api/v1/certifications/user/:userId` — Get user certifications
+
+### Health Check
+
+- **GET** `/api/health` — Health check endpoint
+
+## Postman Collection
+
+You can test the API using the provided Postman collection file: `SkillPassChain-API.postman_collection.json`.
+
+**How to use:**
+1. Open Postman.
+2. Click `Import` and select the `SkillPassChain-API.postman_collection.json` file from this repository.
+3. Use the requests to interact with the API.
+
+## Authentication
+
+Some endpoints require authentication via JWT. Pass the token in the `Authorization` header:
+
+```
+Authorization: Bearer <accessToken>
+```
+
+## License
+
+MIT
+# SkillPassChain Backend API
+
+This is the backend API for SkillPassChain, a platform for managing users, institutions, assessments, and certifications.
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Set up your `.env` file (see `.env.example` if available).
+3. Start the server:
+   ```bash
+   npm run dev
+   ```
+
 ## API Endpoints
 
 ### Auth
