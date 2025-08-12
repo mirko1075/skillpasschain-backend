@@ -49,6 +49,16 @@ class AssessmentController {
       next(error);
     }
   }
+
+  async getAllByUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.params.userId;
+      const assessments = await AssessmentService.getAllByUser(userId);
+      res.json(assessments);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new AssessmentController();

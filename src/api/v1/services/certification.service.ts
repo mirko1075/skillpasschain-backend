@@ -5,6 +5,9 @@ class CertificationService {
   getAll() {
     return CertificationRepository.findAll();
   }
+  getAllByUser(userId: string) {
+    return CertificationRepository.findAllByUser(userId);
+  }
   getById(id: string) {
     return CertificationRepository.findById(id);
   }

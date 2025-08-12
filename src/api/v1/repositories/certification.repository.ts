@@ -4,6 +4,9 @@ class CertificationRepository {
   findAll() {
     return CertificationModel.find().populate('issuedBy recipient');
   }
+  findAllByUser(userId: string) {
+    return CertificationModel.find({ recipient: userId }).populate('issuedBy recipient');
+  }
   findById(id: string) {
     return CertificationModel.findById(id).populate('issuedBy recipient');
   }

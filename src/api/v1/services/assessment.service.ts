@@ -17,6 +17,9 @@ class AssessmentService {
   delete(id: string) {
     return AssessmentRepository.delete(id);
   }
+  getAllByUser(userId: string) {
+    return AssessmentRepository.findAllByUser(userId);
+  }
 }
 
 export default new AssessmentService();

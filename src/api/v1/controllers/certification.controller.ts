@@ -11,6 +11,16 @@ class CertificationController {
     }
   }
 
+  async getAllByUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.params.userId;
+      const certs = await CertificationService.getAllByUser(userId);
+      res.json(certs);
+    } catch (error) {
+      next(error);
+    }
+  }
+  
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const cert = await CertificationService.getById(req.params.id);

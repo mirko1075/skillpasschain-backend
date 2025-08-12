@@ -3,6 +3,7 @@ import AssessmentController from '@v1/controllers/assessment.controller';
 
 const router = Router();
 
+router.get('/user/:userId', AssessmentController.getAllByUser.bind(AssessmentController));
 router.get('/', AssessmentController.getAll.bind(AssessmentController));
 router.get('/:id', AssessmentController.getById.bind(AssessmentController));
 router.post('/', AssessmentController.create.bind(AssessmentController));

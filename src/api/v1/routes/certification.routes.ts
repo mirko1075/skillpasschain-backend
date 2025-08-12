@@ -4,6 +4,7 @@ import CertificationController from '@v1/controllers/certification.controller';
 const router = Router();
 
 router.get('/', CertificationController.getAll.bind(CertificationController));
+router.get('/user/:userId', CertificationController.getAllByUser.bind(CertificationController));
 router.get('/:id', CertificationController.getById.bind(CertificationController));
 router.post('/', CertificationController.create.bind(CertificationController));
 router.put('/:id', CertificationController.update.bind(CertificationController));

@@ -16,6 +16,9 @@ class AssessmentRepository {
   delete(id: string) {
     return AssessmentModel.findByIdAndDelete(id);
   }
+  findAllByUser(userId: string) {
+    return AssessmentModel.find({ createdBy: userId }).populate('createdBy');
+  }
 }
 
 export default new AssessmentRepository();
