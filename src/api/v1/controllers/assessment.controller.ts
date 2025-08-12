@@ -2,6 +2,23 @@
 import { Request, Response } from 'express';
 import AssessmentService from '../services/assessment.service';
 
+export const getAllAssessments = async (req: Request, res: Response) => {
+  try {
+    const assessments = await AssessmentService.getAll();
+    res.json(assessments);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+};
+export const getAssessmentById = async (req: Request, res: Response) => {
+  try {
+    const assessment = await AssessmentService.getById(req.params.id);
+    if (!assessment) return res.status(404).json({ message: 'Assessment not found' });
+    res.json(assessment);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+};
 export const startAssessment = async (req: Request, res: Response) => {
   try {
     const { userId, topicId, passThreshold } = req.body;

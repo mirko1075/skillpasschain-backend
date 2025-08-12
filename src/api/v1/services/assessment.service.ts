@@ -2,8 +2,18 @@
 import AssessmentRepository from '../repositories/assessment.repository';
 import { IAssessment, IQuestion } from '../models/assessment.model';
 import { Types } from 'mongoose';
+import OpenAI from 'openai';
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 class AssessmentService {
+  async getAll() {
+    return AssessmentRepository.findAll();
+  }
+  async getById(id: string) {
+    return AssessmentRepository.findById(id);
+  }
   async startAssessment(userId: string, topicId: string, passThreshold = 70) {
     return AssessmentRepository.create({
       user: new Types.ObjectId(userId),
@@ -15,27 +25,6 @@ class AssessmentService {
       status: 'in-progress',
       questions: [],
     });
-  }
-
-  async getNextQuestions(assessmentId: string) {
-    const assessment = await AssessmentRepository.findById(assessmentId);
-    if (!assessment) throw new Error('Assessment not found');
-
-    // Placeholder for ChatGPT or AI-generated questions
-    // In production, call OpenAI API here with topic & level
-    const mockQuestions: IQuestion[] = Array.from({ length: 20 }).map((_, i) => ({
-      level: assessment.currentLevel,
-      questionText: `Sample Question ${i + 1} for level ${assessment.currentLevel}`,
-      options: ['Option A', 'Option B', 'Option C', 'Option D'],
-      correctAnswer: 'Option A', // In real AI call, this is determined dynamically
-      scoreWeight: 5
-    }));
-
-    // Append to assessment
-    assessment.questions.push(...mockQuestions);
-    await assessment.save();
-
-    return mockQuestions;
   }
 
   async submitAnswers(assessmentId: string, answers: { questionId: number; answer: string }[]) {
@@ -75,6 +64,63 @@ class AssessmentService {
 
   async getUserAssessments(userId: string) {
     return AssessmentRepository.findByUser(userId);
+  }
+
+  async findAssessmentById(assessmentId: string) {
+    return AssessmentRepository.findById(assessmentId);
+  }
+
+  async updateAssessment(id: string, data: Partial<IAssessment>) {
+    return AssessmentRepository.update(id, data);
+  }
+
+  async deleteAssessment(id: string) {
+    return AssessmentRepository.delete(id);
+  }
+
+   async getNextQuestions(assessmentId: string) {
+    const assessment = await AssessmentRepository.findById(assessmentId).populate('topic');
+    if (!assessment) throw new Error('Assessment not found');
+
+    const topicName = (assessment.topic as any)?.name || 'General Knowledge';
+
+    // Call ChatGPT API
+    const prompt = `
+      You are an expert quiz creator. Generate exactly 20 multiple-choice questions
+      about "${topicName}" at difficulty level ${assessment.currentLevel} (1=very easy, 10=expert).
+      Provide JSON array of objects with:
+      {
+        "questionText": "...",
+        "options": ["A", "B", "C", "D"],
+        "correctAnswer": "A",
+        "scoreWeight": number
+      }
+    `;
+
+    const aiResponse = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7
+    });
+
+    let questions: IQuestion[] = [];
+
+    try {
+      questions = JSON.parse(aiResponse.choices[0].message.content || '[]');
+    } catch (err) {
+      throw new Error('Failed to parse AI response as JSON');
+    }
+
+    // Append level & save to DB
+    questions = questions.map(q => ({
+      ...q,
+      level: assessment.currentLevel
+    }));
+
+    assessment.questions.push(...questions);
+    await assessment.save();
+
+    return questions;
   }
 }
 
