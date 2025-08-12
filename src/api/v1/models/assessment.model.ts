@@ -1,25 +1,56 @@
-import { Schema, model, Document, Types } from 'mongoose';
+// src/api/v1/models/assessment.model.ts
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
-export interface IAssessment extends Document {
-  title: string;
-  description?: string;
-  createdBy: Types.ObjectId; // Institution or instructor
-  questions: { question: string; answer: string }[];
+export interface IQuestion {
+  level: number;
+  questionText: string;
+  options: string[];
+  correctAnswer: string;
+  scoreWeight: number;
+  userAnswer?: string;
+  isCorrect?: boolean;
 }
 
-const assessmentSchema = new Schema<IAssessment>(
+export interface IAssessment extends Document {
+  user: Types.ObjectId;
+  topic: Types.ObjectId;
+  currentLevel: number;
+  highestLevelCompleted: number;
+  status: 'in-progress' | 'completed' | 'failed';
+  score: number;
+  passThreshold: number;
+  questions: IQuestion[];
+  startedAt: Date;
+  completedAt?: Date;
+}
+
+const QuestionSchema = new Schema<IQuestion>(
   {
-    title: { type: String, required: true, trim: true },
-    description: { type: String, trim: true },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'Institution', required: true },
-    questions: [
-      {
-        question: { type: String, required: true },
-        answer: { type: String, required: true },
-      },
-    ],
+    level: { type: Number, required: true },
+    questionText: { type: String, required: true },
+    options: { type: [String], required: true },
+    correctAnswer: { type: String, required: true },
+    scoreWeight: { type: Number, required: true },
+    userAnswer: String,
+    isCorrect: Boolean
   },
-  { timestamps: true },
+  { _id: false }
 );
 
-export default model<IAssessment>('Assessment', assessmentSchema);
+const AssessmentSchema = new Schema<IAssessment>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    topic: { type: Schema.Types.ObjectId, ref: 'Topic', required: true },
+    currentLevel: { type: Number, default: 1 },
+    highestLevelCompleted: { type: Number, default: 0 },
+    status: { type: String, enum: ['in-progress', 'completed', 'failed'], default: 'in-progress' },
+    score: { type: Number, default: 0 },
+    passThreshold: { type: Number, default: 70 },
+    questions: [QuestionSchema],
+    startedAt: { type: Date, default: Date.now },
+    completedAt: Date
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model<IAssessment>('Assessment', AssessmentSchema);

@@ -1,24 +1,11 @@
-import AssessmentModel, { IAssessment } from '@v1/models/assessment.model';
+// src/api/v1/repositories/assessment.repository.ts
+import Assessment, { IAssessment } from '../models/assessment.model';
+import { Types } from 'mongoose';
 
-class AssessmentRepository {
-  findAll() {
-    return AssessmentModel.find().populate('createdBy');
-  }
-  findById(id: string) {
-    return AssessmentModel.findById(id).populate('createdBy');
-  }
-  create(data: IAssessment) {
-    return AssessmentModel.create(data);
-  }
-  update(id: string, data: Partial<IAssessment>) {
-    return AssessmentModel.findByIdAndUpdate(id, data, { new: true }).populate('createdBy');
-  }
-  delete(id: string) {
-    return AssessmentModel.findByIdAndDelete(id);
-  }
-  findAllByUser(userId: string) {
-    return AssessmentModel.find({ createdBy: userId }).populate('createdBy');
-  }
-}
-
-export default new AssessmentRepository();
+export default {
+  create: (data: Partial<IAssessment>) => Assessment.create(data),
+  findAll: () => Assessment.find(),
+  findById: (id: string) => Assessment.findById(id),
+  findByUser: (userId: string) => Assessment.find({ user: new Types.ObjectId(userId) }),
+  update: (id: string, data: Partial<IAssessment>) => Assessment.findByIdAndUpdate(id, data, { new: true })
+};

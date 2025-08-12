@@ -1,13 +1,17 @@
+// src/api/v1/routes/assessment.routes.ts
 import { Router } from 'express';
-import AssessmentController from '@v1/controllers/assessment.controller';
+import {
+  startAssessment,
+  getNextQuestions,
+  submitAnswers,
+  getUserAssessments
+} from '../controllers/assessment.controller';
 
 const router = Router();
 
-router.get('/user/:userId', AssessmentController.getAllByUser.bind(AssessmentController));
-router.get('/', AssessmentController.getAll.bind(AssessmentController));
-router.get('/:id', AssessmentController.getById.bind(AssessmentController));
-router.post('/', AssessmentController.create.bind(AssessmentController));
-router.put('/:id', AssessmentController.update.bind(AssessmentController));
-router.delete('/:id', AssessmentController.delete.bind(AssessmentController));
+router.post('/start', startAssessment); // POST /api/v1/assessments/start
+router.get('/:assessmentId/questions', getNextQuestions); // GET /api/v1/assessments/:assessmentId/questions
+router.post('/:assessmentId/submit', submitAnswers); // POST /api/v1/assessments/:assessmentId/submit
+router.get('/user/:userId', getUserAssessments); // GET /api/v1/assessments/user/:userId
 
 export default router;

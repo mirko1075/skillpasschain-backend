@@ -15,14 +15,11 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\"}"
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
               "raw": "http://localhost:3000/api/v1/users",
@@ -61,9 +58,150 @@
               "port": "3000",
               "path": ["api", "v1", "users", ":id"],
               "variable": [
-                {
-                  "key": "id"
-                }
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users", ":id"],
+              "variable": [
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users", ":id"],
+              "variable": [
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Institutions",
+      "item": [
+        {
+          "name": "Create Institution",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Harvard University\",\n  \"email\": \"contact@harvard.edu\",\n  \"address\": \"Cambridge, MA\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/institutions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "institutions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Institutions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/institutions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "institutions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Institution By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/institutions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "institutions", ":id"],
+              "variable": [
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Institution",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MIT\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/institutions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "institutions", ":id"],
+              "variable": [
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Institution",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/institutions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "institutions", ":id"],
+              "variable": [
+                { "key": "id" }
               ]
             }
           },

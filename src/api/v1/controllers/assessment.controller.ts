@@ -1,64 +1,44 @@
-import { Request, Response, NextFunction } from 'express';
-import AssessmentService from '@v1/services/assessment.service';
+// src/api/v1/controllers/assessment.controller.ts
+import { Request, Response } from 'express';
+import AssessmentService from '../services/assessment.service';
 
-class AssessmentController {
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    try {
-      const assessments = await AssessmentService.getAll();
-      res.json(assessments);
-    } catch (error) {
-      next(error);
-    }
+export const startAssessment = async (req: Request, res: Response) => {
+  try {
+    const { userId, topicId, passThreshold } = req.body;
+    const assessment = await AssessmentService.startAssessment(userId, topicId, passThreshold);
+    res.status(201).json(assessment);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
   }
+};
 
-  async getById(req: Request, res: Response, next: NextFunction) {
-    try {
-      const assessment = await AssessmentService.getById(req.params.id);
-      if (!assessment) return res.status(404).json({ message: 'Assessment not found' });
-      res.json(assessment);
-    } catch (error) {
-      next(error);
-    }
+export const getNextQuestions = async (req: Request, res: Response) => {
+  try {
+    const { assessmentId } = req.params;
+    const questions = await AssessmentService.getNextQuestions(assessmentId);
+    res.json({ questions });
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
   }
+};
 
-  async create(req: Request, res: Response, next: NextFunction) {
-    try {
-      const assessment = await AssessmentService.create(req.body);
-      res.status(201).json(assessment);
-    } catch (error) {
-      next(error);
-    }
+export const submitAnswers = async (req: Request, res: Response) => {
+  try {
+    const { assessmentId } = req.params;
+    const { answers } = req.body;
+    const updated = await AssessmentService.submitAnswers(assessmentId, answers);
+    res.json(updated);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
   }
+};
 
-  async update(req: Request, res: Response, next: NextFunction) {
-    try {
-      const updated = await AssessmentService.update(req.params.id, req.body);
-      if (!updated) return res.status(404).json({ message: 'Assessment not found' });
-      res.json(updated);
-    } catch (error) {
-      next(error);
-    }
+export const getUserAssessments = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const list = await AssessmentService.getUserAssessments(userId);
+    res.json(list);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
   }
-
-  async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      const deleted = await AssessmentService.delete(req.params.id);
-      if (!deleted) return res.status(404).json({ message: 'Assessment not found' });
-      res.json({ message: 'Assessment deleted' });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getAllByUser(req: Request, res: Response, next: NextFunction) {
-    try {
-      const userId = req.params.userId;
-      const assessments = await AssessmentService.getAllByUser(userId);
-      res.json(assessments);
-    } catch (error) {
-      next(error);
-    }
-  }
-}
-
-export default new AssessmentController();
+};
