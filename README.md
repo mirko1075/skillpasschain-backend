@@ -1,3 +1,15 @@
+### Topics
+
+- **POST** `/api/v1/topics` — Create topic
+  - Body: `{ "name": "Math", "description": "Mathematics basics", "levels": 3, "isActive": true }`
+- **GET** `/api/v1/topics` — Get all topics
+- **GET** `/api/v1/topics/:id` — Get topic by ID
+- **PUT** `/api/v1/topics/:id` — Update topic
+  - Body: `{ "name": "Advanced Math" }`
+- **DELETE** `/api/v1/topics/:id` — Delete topic
+- **PATCH** `/api/v1/topics/:id/active` — Activate/deactivate topic
+  - Body: `{ "isActive": false }`
+- **POST** `/api/v1/topics/:id/upload` — Upload document for topic (multipart/form-data or `{ documentUrl: "url" }`)
 # SkillPassChain Backend API
 
 This is the backend API for SkillPassChain, a platform for managing users, institutions, assessments, and certifications.
