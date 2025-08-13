@@ -13,6 +13,7 @@ import certificationRoutes from '@v1/routes/certification.routes';
 import institutionRoutes from '@v1/routes/institution.routes';
 import authRoutes from '@v1/routes/auth.routes';
 import adminRoutes from '@v1/routes/admin.routes';
+import topicsRoutes from '@v1/routes/topic.routes';
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/assessments', assessmentRoutes);
 app.use('/api/v1/certifications', certificationRoutes);
 app.use('/api/v1/institutions', institutionRoutes);
+app.use('/api/v1/topics', topicsRoutes);
 // Not Found and Error Handlers
 app.use(notFound);
 app.use(errorHandler);
