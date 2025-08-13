@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import InstitutionController from '@v1/controllers/institution.controller';
+import { authenticate } from '@middlewares/authenticate';
+import { authorizeRole } from '@middlewares/authorizeRole';
+import institutionController from '@v1/controllers/institution.controller';
 
 const router = Router();
 
-router.get('/', InstitutionController.getAll.bind(InstitutionController));
-router.get('/:id', InstitutionController.getById.bind(InstitutionController));
-router.post('/', InstitutionController.create.bind(InstitutionController));
-router.put('/:id', InstitutionController.update.bind(InstitutionController));
-router.delete('/:id', InstitutionController.delete.bind(InstitutionController));
+router.get('/', authenticate, authorizeRole('admin'), institutionController.getAll);
+router.get('/:id', authenticate, authorizeRole('admin'), institutionController.getById);
+router.post('/', authenticate, authorizeRole('admin'), institutionController.create);
+router.put('/:id', authenticate, authorizeRole('admin'), institutionController.update);
+router.delete('/:id', authenticate, authorizeRole('admin'), institutionController.delete);
 
 export default router;

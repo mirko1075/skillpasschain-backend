@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import CertificationController from '@v1/controllers/certification.controller';
+import certificationController from '@v1/controllers/certification.controller';
 
 const router = Router();
 
-router.get('/', CertificationController.getAll.bind(CertificationController));
-router.get('/user/:userId', CertificationController.getAllByUser.bind(CertificationController));
-router.get('/:id', CertificationController.getById.bind(CertificationController));
-router.post('/', CertificationController.create.bind(CertificationController));
-router.put('/:id', CertificationController.update.bind(CertificationController));
-router.delete('/:id', CertificationController.delete.bind(CertificationController));
+router.get('/', certificationController.getAll);
+router.get('/user/:userId', certificationController.getAllByUser);
+router.get('/:id', certificationController.getById);
+router.post('/', certificationController.create);
+router.put('/:id', certificationController.update);
+router.delete('/:id', certificationController.delete);
 
 export default router;
