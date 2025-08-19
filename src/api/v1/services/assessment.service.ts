@@ -1,6 +1,6 @@
 // src/api/v1/services/assessment.service.ts
+import { IAssessment, QuestionInstance } from '@v1/models/assessment.model';
 import AssessmentRepository from '../repositories/assessment.repository';
-import { IAssessment, IQuestion } from '../models/assessment.model';
 import { Types } from 'mongoose';
 import OpenAI from 'openai';
 
@@ -28,7 +28,7 @@ class AssessmentService {
   }
 
   async submitAnswers(assessmentId: string, answers: { questionId: number; answer: string }[]) {
-    const assessment = await AssessmentRepository.findById(assessmentId);
+    const assessment: IAssessment | null = await AssessmentRepository.findById(assessmentId);
     if (!assessment) throw new Error('Assessment not found');
 
     let levelScore = 0;
@@ -38,9 +38,6 @@ class AssessmentService {
       const q = assessment.questions[questionId];
       if (!q) return;
       q.userAnswer = answer;
-      q.isCorrect = q.correctAnswer === answer;
-      if (q.isCorrect) levelScore += q.scoreWeight;
-      totalWeight += q.scoreWeight;
     });
 
     const levelPercentage = (levelScore / totalWeight) * 100;
@@ -103,7 +100,7 @@ class AssessmentService {
       temperature: 0.7
     });
 
-    let questions: IQuestion[] = [];
+    let questions: QuestionInstance[] = [];
 
     try {
       questions = JSON.parse(aiResponse.choices[0].message.content || '[]');

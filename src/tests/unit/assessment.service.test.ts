@@ -10,7 +10,7 @@ jest.mock('@v1/repositories/assessment.repository', () => ({
 describe('AssessmentService', () => {
   it('should create assessment', async () => {
     const data: IAssessment = { title: 'Node.js Test', score: 80, takenBy: 'Jane' } as unknown as IAssessment;
-    const assessment = await AssessmentService.create(data);
+    const assessment = await AssessmentService.startAssessment(data);
     expect(assessment.title).toBe('Node.js Test');
   });
 

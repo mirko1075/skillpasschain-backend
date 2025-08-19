@@ -1,28 +1,48 @@
+// src/api/v1/models/topic.model.ts
 import mongoose, { Schema, Document } from 'mongoose';
+
+export interface Question {
+  question: string;
+  options: string[];
+  answer: string;
+}
+
+export interface LevelPool {
+  level: number;
+  questions: Question[];
+}
 
 export interface ITopic extends Document {
   name: string;
-  description: string;
-  levels: number; // Max levels for this topic
+  description?: string;
+  levels: number;
   isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  referenceDocumentUrl?: string; // Optional uploaded doc link
-  createdBy?: Schema.Types.ObjectId; // Optional, if you want to track who created the institution
-  updatedBy?: Schema.Types.ObjectId; // Optional, if you want to track
+  createdBy: mongoose.Types.ObjectId;
+  documentUrl?: string;
+  questionPools: LevelPool[];
+  documentContent?: string;
 }
 
 const TopicSchema: Schema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
-    description: { type: String, required: true },
-    levels: { type: Number, required: true, min: 1 },
+    name: { type: String, required: true },
+    description: { type: String },
+    levels: { type: Number, required: true, default: 1 },
     isActive: { type: Boolean, default: true },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
-    referenceDocumentUrl: { type: String },
     createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'User'},
+    documentUrl: { type: String },
+    questionPools: [
+      {
+        level: { type: Number, required: true },
+        questions: [
+          {
+            question: { type: String, required: true },
+            options: [{ type: String }],
+            answer: { type: String, required: true },
+          },
+        ],
+      },
+    ],
   },
   { timestamps: true }
 );

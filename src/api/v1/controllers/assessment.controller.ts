@@ -1,6 +1,15 @@
 // src/api/v1/controllers/assessment.controller.ts
 import { Request, Response } from 'express';
 import AssessmentService from '../services/assessment.service';
+import Topic from '../models/topic.model';
+import Assessment from '../models/assessment.model';
+import { config } from '@config/config';
+import { generateQuestions } from '@utils/generateQuestions';
+
+function sampleArray<T>(arr: T[], count: number): T[] {
+  const shuffled = arr.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
 
 class AssessmentController {
   async getAllAssessments(req: Request, res: Response) {
@@ -58,6 +67,42 @@ async getUserAssessments(req: Request, res: Response) {
     res.json(list);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
+  }
+  };
+  
+
+createAssessment = async (req: Request, res: Response) => {
+  try {
+    const { topicId, user } = req.body;
+    const userId = user?.id;
+    let questions: any[] = [];
+
+    const topic = await Topic.findById(topicId);
+    if (!topic) return res.status(404).json({ error: 'Topic not found' });
+
+    if (config.generateAtTopicCreation && topic.questionPools?.length) {
+      // ✅ Reuse stored pool for level 1
+      const pool = topic.questionPools.find((q: any) => q.level === 1);
+      questions = pool?.questions || [];
+    } else {
+      // ✅ Generate fresh, randomized questions
+      questions = await generateQuestions(topic.name, 1, topic.levels, topic.documentContent);
+    }
+
+    const assessment = await Assessment.create({
+      user: userId,
+      topic: topic._id,
+      currentLevel: 1,
+      highestLevelCompleted: 0,
+      status: 'in-progress',
+      score: 0,
+      passThreshold: 70,
+      questions: sampleArray(questions, 10), // ✅ Randomly select 10 questions
+    });
+
+    res.status(201).json(assessment);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
   }
 };
 }

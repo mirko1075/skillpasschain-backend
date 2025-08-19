@@ -1,65 +1,45 @@
 // src/api/v1/models/assessment.model.ts
-import mongoose, { Schema, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IQuestion {
-  level: number;
-  questionText: string;
+export interface QuestionInstance {
+  question: string;
   options: string[];
-  correctAnswer: string;
-  scoreWeight: number;
-  userAnswer?: string;
-  isCorrect?: boolean;
-  startedAt?: Date;
-  completedAt?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
-  createdBy?: Types.ObjectId; // Optional, if you want to track who created the question
-  updatedBy?: Types.ObjectId; // Optional, if you want to track who updated the question
+  answer: string; // correct answer
+  userAnswer?: string; // filled when answering
 }
 
 export interface IAssessment extends Document {
-  _id: Types.ObjectId;
-  user: Types.ObjectId;
-  topic: Types.ObjectId;
+  user: mongoose.Types.ObjectId;
+  topic: mongoose.Types.ObjectId;
   currentLevel: number;
   highestLevelCompleted: number;
-  status: 'in-progress' | 'completed' | 'failed' | 'pending' | 'not-started' | 'expired' | 'cancelled';
+  status: 'in-progress' | 'completed' | 'failed';
   score: number;
   passThreshold: number;
-  questions: IQuestion[];
+  questions: QuestionInstance[];
   startedAt: Date;
   completedAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy?: Types.ObjectId; // Optional, if you want to track who created the assessment
-  updatedBy?: Types.ObjectId; // Optional, if you want to track who updated the
 }
 
-const QuestionSchema = new Schema<IQuestion>(
-  {
-    level: { type: Number, required: true },
-    questionText: { type: String, required: true },
-    options: { type: [String], required: true },
-    correctAnswer: { type: String, required: true },
-    scoreWeight: { type: Number, required: true },
-    userAnswer: String,
-    isCorrect: Boolean
-  },
-  { _id: false }
-);
-
-const AssessmentSchema = new Schema<IAssessment>(
+const AssessmentSchema: Schema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     topic: { type: Schema.Types.ObjectId, ref: 'Topic', required: true },
     currentLevel: { type: Number, default: 1 },
     highestLevelCompleted: { type: Number, default: 0 },
-    status: { type: String, enum: ['in-progress', 'completed', 'failed'], default: 'in-progress' },
+    status: { type: String, enum: ['in-progress', 'completed'], default: 'in-progress' },
     score: { type: Number, default: 0 },
     passThreshold: { type: Number, default: 70 },
-    questions: [QuestionSchema],
+    questions: [
+      {
+        question: String,
+        options: [String],
+        answer: String,
+        userAnswer: String,
+      },
+    ],
     startedAt: { type: Date, default: Date.now },
-    completedAt: Date
+    completedAt: { type: Date },
   },
   { timestamps: true }
 );
