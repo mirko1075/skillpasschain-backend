@@ -1,3 +1,30 @@
+        {
+          "name": "Upload Avatar",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "multipart/form-data" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "avatar", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/:id/avatar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users", ":id", "avatar"],
+              "variable": [
+                { "key": "id" }
+              ]
+            }
+          },
+          "response": []
+        },
+
 {
   "info": {
     "_postman_id": "d28a5daa-c19c-40d9-8ee4-7a3f0f8cb1b1",
@@ -31,6 +58,33 @@
           },
           "response": []
         },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Admin\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"adminpass\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/create-admin",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "users", "create-admin"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
         {
           "name": "Get All Users",
           "request": {

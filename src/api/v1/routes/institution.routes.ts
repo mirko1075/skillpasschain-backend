@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import InstitutionController from '@v1/controllers/institution.controller';
-import { authenticate } from '@middlewares/authenticate';
-import { authorizeRole } from '@middlewares/authorizeRole';
 import institutionController from '@v1/controllers/institution.controller';
+import { authorizeRole } from '@middlewares/authorizeRole';
+import { authenticate } from '@v1/middlewares/auth.middleware';
 
 const router = Router();
 

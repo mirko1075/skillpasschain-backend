@@ -1,3 +1,34 @@
+  /users/{id}/avatar:
+    post:
+      summary: Upload user avatar
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+              required: [avatar]
+      responses:
+        '200':
+          description: Avatar uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  avatarUrl:
+                    type: string
+                    format: uri
+                    example: /uploads/avatars/1691930000000-avatar.png
+        '400':
+          $ref: '#/components/responses/BadRequest'
 openapi: 3.1.0
 info:
   title: SkillPassChain API
@@ -29,36 +60,45 @@ paths:
               email: john@example.com
               password: password123
       responses:
-        '201':
-          description: User registered
+        '201': 
+          description: User registered successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /auth/login:
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /users/create-admin:
     post:
-      summary: Login
-      tags: [Auth]
+      summary: Create a new admin user
+      tags: [Users]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginInput'
+              $ref: '#/components/schemas/AdminInput'
             example:
-              email: john@example.com
-              password: password123
+              firstName: Alice
+              lastName: Admin
+              email: admin@example.com
+              password: adminpass
+              role: admin
       responses:
-        '200':
-          description: Authenticated
+        '201':
+          description: Admin created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthTokens'
+                $ref: '#/components/schemas/User'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
   /auth/refresh:
     post:
       summary: Refresh access token

@@ -1,3 +1,9 @@
+### Avatar Upload
+
+- **POST** `/api/v1/users/:id/avatar` — Upload user avatar (multipart/form-data)
+  - Form field: `avatar` (file)
+  - Response: `{ "avatarUrl": "..." }`
+
 ### Topics
 
 - **POST** `/api/v1/topics` — Create topic
@@ -39,7 +45,9 @@ This is the backend API for SkillPassChain, a platform for managing users, insti
 - **POST** `/api/v1/auth/logout` — Logout (requires Authorization header)
 
 ### Users
-
+- **POST** `/api/v1/admin/create-admin` — Create a new admin user (requires authentication and admin role)
+  - Body: `{ "firstName": "Alice", "lastName": "Admin", "email": "admin@example.com", "password": "adminpass", "role": "admin" }`
+  - Requires: Bearer token (admin)
 - **POST** `/api/v1/users` — Create user
 - **GET** `/api/v1/users` — Get all users
 - **GET** `/api/v1/users/:id` — Get user by ID

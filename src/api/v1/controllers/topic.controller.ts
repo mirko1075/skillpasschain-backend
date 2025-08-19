@@ -5,7 +5,7 @@ import { ApiError } from 'errors/ApiError';
 class TopicController {
   async createTopic(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, description, levels, isActive, referenceDocumentUrl } = req.body;
+      const { name, description, levels, isActive, referenceDocumentUrl, createdBy } = req.body;
 
       const topic = await Topic.create({
         name,
@@ -13,7 +13,7 @@ class TopicController {
         levels,
         isActive,
         referenceDocumentUrl,
-        createdBy: (req as any).user._id
+        createdBy
       });
 
       res.status(201).json(topic);

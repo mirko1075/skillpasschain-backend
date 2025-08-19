@@ -9,19 +9,30 @@ export interface IQuestion {
   scoreWeight: number;
   userAnswer?: string;
   isCorrect?: boolean;
+  startedAt?: Date;
+  completedAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: Types.ObjectId; // Optional, if you want to track who created the question
+  updatedBy?: Types.ObjectId; // Optional, if you want to track who updated the question
 }
 
 export interface IAssessment extends Document {
+  _id: Types.ObjectId;
   user: Types.ObjectId;
   topic: Types.ObjectId;
   currentLevel: number;
   highestLevelCompleted: number;
-  status: 'in-progress' | 'completed' | 'failed';
+  status: 'in-progress' | 'completed' | 'failed' | 'pending' | 'not-started' | 'expired' | 'cancelled';
   score: number;
   passThreshold: number;
   questions: IQuestion[];
   startedAt: Date;
   completedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy?: Types.ObjectId; // Optional, if you want to track who created the assessment
+  updatedBy?: Types.ObjectId; // Optional, if you want to track who updated the
 }
 
 const QuestionSchema = new Schema<IQuestion>(

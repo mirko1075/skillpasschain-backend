@@ -7,6 +7,7 @@ import { Request, Response, NextFunction } from 'express';
 export const authorizeRole = (...roles: string[]) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     const userRole = (req as any).user?.role; // set by auth middleware
+    console.log('userRole, originalUrl :>> ', userRole, req.originalUrl);
     if (!roles.includes(userRole)) {
       return next(new ApiError(403, 'Forbidden: You do not have access to this resource'));
     }
